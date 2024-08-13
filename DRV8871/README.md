@@ -91,3 +91,31 @@ motor_right = Motor(1, pwm_right)
 pwm_left = DualPWM('PH15','PK0', alt_function=pyb.Pin.AF3_TIM8, timer=timer, channel_number=3)
 motor_left = Motor(0, pwm_left)
 ```
+And finally, simply set the motor's direction and speed percentage to run them as shown below!
+
+```python
+
+# moving forward...
+motor_left.set_direction(0)
+motor_right.set_direction(1)
+motor_left.set_speed_percentage(50)
+motor_right.set_speed_percentage(50)
+pyb.delay(2000)
+
+motor_left.set_speed_percentage(0)
+motor_right.set_speed_percentage(0)
+pyb.delay(1000)
+
+# moving backward...
+motor_left.set_direction(1)
+motor_right.set_direction(0)
+motor_left.set_speed_percentage(50)
+motor_right.set_speed_percentage(50)
+
+pyb.delay(2000)
+
+motor_left.set_speed_percentage(0)
+motor_right.set_speed_percentage(0)
+
+```
+Thank you for reading!
