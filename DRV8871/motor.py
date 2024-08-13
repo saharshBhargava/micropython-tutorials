@@ -20,8 +20,8 @@ class Motor:
         self.set_speed_percentage(0)
 
     def set_direction(self,direction):
-        self.direction=direction ## todo complete, if required
-
+        self.direction=direction 
+        
 class DualPWM:
     def __init__(self, pin_number, pin_number_n, alt_function, timer, channel_number):
         self.pin = Pin(pin_number, mode=Pin.OUT_PP,value=1)
