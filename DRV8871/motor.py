@@ -1,7 +1,5 @@
 import pyb
 from pyb import Pin, Timer, I2C
-from stop_watch import StopWatch 
-
 
 class Motor:
     def __init__(self, initial_direction, dual_pwm):
