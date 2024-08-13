@@ -24,7 +24,13 @@ class DualPWM:
         self.timer = timer
         self.channel_number=channel_number
         self.channel = self.timer.channel(channel_number, Timer.PWM,  pulse_width_percent=0)
-        
+
+```
+We can create various instance variables to store the complementary pair of pins along with the timer and channel we want to use.
+
+Next we can define some functions for our class. 
+
+```python      
     def pulse_width_percent(self, percentage):
         if percentage > 100:
             percentage = 100
@@ -32,9 +38,6 @@ class DualPWM:
             percentage =0
         pw = int(24000*percentage/100) # 24000 was identified as the best PWM width max value for my purpose.
         self.channel.pulse_width(pw) 
-
-    def stop(self):
-        self.timer.deinit() 
 
     def _stop(self):
         self.pin.init(mode=Pin.OUT_PP,value=1)
@@ -50,3 +53,5 @@ class DualPWM:
         self.pin.init( mode=pyb.Pin.ALT, alt=self.alt_function)
         self.pulse_width_percent(speed)
 ```
+
+
