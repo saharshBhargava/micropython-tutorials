@@ -10,5 +10,43 @@ Hardware timers provide precise timing control, ensuring consistent and accurate
 
 Modifying the timer’s frequency can allow for a greater pulse width range. This may be beneficial in cases where a high range of pulse width is needed for precise motor speed control. The pulse width at different frequencies can be measured using a logic analyzer.
 
-After determining the optimal frequency and pulse width range using a logic analyzer, the DRV8871 motor driver was used to run a motor. To spin the motor forward, pull the Pin 1 high and then a PWM signal inverse to the speed you want the motor to spin would be applied to PIN2. If you want the motor to spin at 25% speed forward, you would pull Pin 1 high and then apply a PWM signal with 75% duty cycle to Pin 2.
+After determining the optimal frequency and pulse width range using a logic analyzer, the DRV8871 motor driver was used to run a motor. To spin the motor forward, pull the Pin 1 high and then a PWM signal related to the speed you want the motor to spin would be applied to PIN2. 
 
+To achieve this, let's create two classes.
+
+```python
+class DualPWM:
+    def __init__(self, pin_number, pin_number_n, alt_function, timer, channel_number):
+        self.pin = Pin(pin_number, mode=Pin.OUT_PP,value=1)
+        self.pin_n = Pin(pin_number_n, mode=Pin.OUT_PP,value=1)
+        self.alt_function=alt_function
+        self.timer = timer
+        self.channel_number=channel_number
+        self.channel = self.timer.channel(channel_number, Timer.PWM,  pulse_width_percent=0)
+        
+    def pulse_width_percent(self, percentage):
+        if percentage > 100:
+            percentage = 100
+        if percentage < 0:
+            percentage =0
+        pw = int(24000*percentage/100)
+        self.channel.pulse_width(pw) # max 24k
+        #print("stting pw to:",pw)
+
+    def stop(self):
+        self.timer.deinit() 
+
+    def _stop(self):
+        self.pin.init(mode=Pin.OUT_PP,value=1)
+        self.pin_n.init(mode=Pin.OUT_PP,value=1)
+
+    def _forward(self,speed):
+        self.pin.init(mode=Pin.OUT_PP,value=1)
+        self.pin_n.init( mode=pyb.Pin.ALT, alt=self.alt_function)
+        self.pulse_width_percent(100-speed)
+
+    def _reverse(self,speed):
+        self.pin_n.init(mode=Pin.OUT_PP,value=1)
+        self.pin.init( mode=pyb.Pin.ALT, alt=self.alt_function)
+        self.pulse_width_percent(speed)
+```
