@@ -78,4 +78,16 @@ class Motor:
         self.direction=direction
 
 ```
+To test the motors, you need to create a timer. The next step would be to create instances of our DualPWM and Motor classes. 
 
+```python
+timer = pyb.Timer(8, freq=10000, deadtime=1008)
+
+#Right Motor
+pwm_right = DualPWM('PJ7','PJ6', alt_function=pyb.Pin.AF3_TIM8, timer=timer, channel_number=2)
+motor_right = Motor(1, pwm_right)
+
+#Left Motor
+pwm_left = DualPWM('PH15','PK0', alt_function=pyb.Pin.AF3_TIM8, timer=timer, channel_number=3)
+motor_left = Motor(0, pwm_left)
+```
