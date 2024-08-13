@@ -12,9 +12,10 @@ Modifying the timer’s frequency can allow for a greater pulse width range. Thi
 
 After determining the optimal frequency and pulse width range using a logic analyzer, the DRV8871 motor driver was used to run a motor. To spin the motor forward, pull the Pin 1 high and then a PWM signal related to the speed you want the motor to spin would be applied to PIN2. 
 
-To achieve this, let's create two classes.
+To achieve this, first, lets create a PWM class.
 
 ```python
+
 class DualPWM:
     def __init__(self, pin_number, pin_number_n, alt_function, timer, channel_number):
         self.pin = Pin(pin_number, mode=Pin.OUT_PP,value=1)
@@ -29,9 +30,8 @@ class DualPWM:
             percentage = 100
         if percentage < 0:
             percentage =0
-        pw = int(24000*percentage/100)
-        self.channel.pulse_width(pw) # max 24k
-        #print("stting pw to:",pw)
+        pw = int(24000*percentage/100) # 24000 was identified as the best PWM width max value for my purpose.
+        self.channel.pulse_width(pw) 
 
     def stop(self):
         self.timer.deinit() 
