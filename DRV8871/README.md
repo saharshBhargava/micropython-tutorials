@@ -28,7 +28,7 @@ class DualPWM:
 ```
 We can create various instance variables to store the complementary pair of pins along with the timer and channel we want to use.
 
-Next we can define some functions for our class. 
+Next, we can define some functions for our class. 
 
 ```python      
     def pulse_width_percent(self, percentage):
@@ -53,5 +53,29 @@ Next we can define some functions for our class.
         self.pin.init( mode=pyb.Pin.ALT, alt=self.alt_function)
         self.pulse_width_percent(speed)
 ```
+Next, we can also create a motor class which will help us test out our motor(s).
 
+```python
+
+class Motor:
+    def __init__(self, initial_direction, dual_pwm):
+        self.direction = initial_direction
+        self.dual_pwm = dual_pwm
+
+    def set_speed_percentage(self, speed_percent):
+        if speed_percent == 0:
+            self.dual_pwm._stop()
+            return
+        if self.direction == 0:
+            self.dual_pwm._reverse(speed_percent)
+        else:
+            self.dual_pwm._forward(speed_percent)
+
+    def stop(self):
+        self.set_speed_percentage(0)
+
+    def set_direction(self,direction):
+        self.direction=direction
+
+```
 
