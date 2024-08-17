@@ -3,7 +3,7 @@
 ## Overview
 In this project, a DRV8871 motor driver was used to run a DC motor using an Arduino Giga coded in MicroPython.
 
-## Implementation
+## Hardware Timers
 
 The Arduino GIGA R1 has a STM32H747XI processor. There are two advanced-control timers on the board (TIM1, TIM8) which can be used as PWM generators. and they have complementary PWM outputs. 
 
@@ -13,6 +13,7 @@ Hardware timers provide precise timing control, ensuring consistent and accurate
 
 Modifying the timer’s frequency can allow for a greater pulse width range. This may be beneficial in cases where a high range of pulse width is needed for precise motor speed control. The pulse width at different frequencies can be measured using a logic analyzer.
 
+## Determining the Optimal Frequency using a Logic Analyzer
 After determining the optimal frequency and pulse width range using a logic analyzer, the DRV8871 motor driver was used to run a motor. To spin the motor forward, pull the Pin 1 high and then a PWM signal related to the speed you want the motor to spin would be applied to PIN2. 
 
 To achieve this, first, lets create a PWM class.
