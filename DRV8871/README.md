@@ -66,6 +66,7 @@ class Motor:
         if speed_percent == 0:
             self.dual_pwm._stop()
             return
+        self.dual_pwm._forward(speed_percent)
 
 ```
 To test the motors, you need to create a timer. The next step would be to create instances of our DualPWM and Motor classes. 
