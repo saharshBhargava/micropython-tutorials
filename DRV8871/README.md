@@ -80,7 +80,7 @@ pwm = DualPWM('PJ7','PJ6', alt_function=pyb.Pin.AF3_TIM8, timer=timer, channel_n
 motor = Motor(pwm)
 
 ```
-And finally, simply set the motor's direction and speed percentage to run them as shown below!
+And finally, simply set the motor's speed percentage to run them as shown below!
 
 ```python
 
